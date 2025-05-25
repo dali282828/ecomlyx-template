@@ -1,0 +1,27 @@
+steps:
+# Build WordPress image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomlyx-wordpress:latest', './wordpress']
+  timeout: 1200s
+
+# Build Dashboard image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomlyx-dashboard:latest', './dashboard']
+  timeout: 1200s
+
+# Build Generator service
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomlyx-generator:latest', './services/generator']
+  timeout: 600s
+
+# Build Tenancy Manager
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomlyx-tenancy:latest', './services/tenancy-manager']
+  timeout: 600s
+
+# Push all images
+images:
+- 'gcr.io/$PROJECT_ID/ecomlyx-wordpress:latest'
+- 'gcr.io/$PROJECT_ID/ecomlyx-dashboard:latest'
+- 'gcr.io/$PROJECT_ID/ecomlyx-generator:latest'
+- 'gcr.io/$PROJECT_ID/ecomlyx-tenancy:latest'
