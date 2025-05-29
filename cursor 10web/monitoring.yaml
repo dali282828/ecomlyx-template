@@ -1,0 +1,17 @@
+apiVersion: monitoring.googleapis.com/v1
+kind: UptimeCheckConfig
+metadata:
+  name: website-builder-health
+spec:
+  displayName: Website Builder Health Check
+  httpCheck:
+    path: /api/health
+    port: 8080
+    useSsl: true
+  monitoredResource:
+    type: cloud_run_revision
+    labels:
+      project_id: ${PROJECT_ID}
+      service_name: business-website-builder
+  period: 60s
+  timeout: 10s 
